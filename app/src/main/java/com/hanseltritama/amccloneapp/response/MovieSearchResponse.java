@@ -24,5 +24,4 @@ public class MovieSearchResponse {
     public List<MovieModel> getMovieList() {
         return movieList;
     }
-
 }
