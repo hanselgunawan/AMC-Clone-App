@@ -1,6 +1,8 @@
 package com.hanseltritama.amccloneapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,6 +17,7 @@ import com.hanseltritama.amccloneapp.request.Service;
 import com.hanseltritama.amccloneapp.response.MovieSearchResponse;
 import com.hanseltritama.amccloneapp.utils.Credentials;
 import com.hanseltritama.amccloneapp.utils.MovieAPI;
+import com.hanseltritama.amccloneapp.viewmodel.MovieListViewModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,16 +27,30 @@ public class MovieListActivity extends AppCompatActivity {
 
     Button btn;
 
+    // ViewModel
+    private MovieListViewModel movieListViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btn = findViewById(R.id.button);
+        movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
-        btn.setOnClickListener(new View.OnClickListener(){
+//        btn.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                getRetrofitResponseById();
+//            }
+//        });
+    }
+
+    // Observing any data change
+    private void setupObserver() {
+        movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
             @Override
-            public void onClick(View v) {
-                getRetrofitResponseById();
+            public void onChanged(List<MovieModel> movieModels) {
+
             }
         });
     }
