@@ -5,7 +5,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +16,7 @@ import com.hanseltritama.amccloneapp.response.MovieSearchResponse;
 import com.hanseltritama.amccloneapp.utils.Credentials;
 import com.hanseltritama.amccloneapp.utils.MovieAPI;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class MovieListActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                getRetrofitResponse();
+                getRetrofitResponseById();
             }
         });
     }
@@ -70,6 +70,32 @@ public class MovieListActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<MovieSearchResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getRetrofitResponseById() {
+        MovieAPI movieAPI = Service.getMovieApi();
+        Call<MovieModel> movieModelCall = movieAPI.getMovie(343611, Credentials.API_KEY);
+
+        movieModelCall.enqueue(new Callback<MovieModel>() {
+            @Override
+            public void onResponse(Call<MovieModel> call, Response<MovieModel> response) {
+                if (response.code() == 200) {
+                    MovieModel movie = response.body();
+                    Log.v("Tag", "The Response: " + movie.getTitle());
+                } else {
+                    try {
+                        Log.v("Tag", "Error " + response.errorBody());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MovieModel> call, Throwable t) {
 
             }
         });
