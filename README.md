@@ -18,7 +18,7 @@ Key components:
 **Why MVVM?**
 * UI components are kept away from the business logic.
 * The business logic is kept away from the database operations.
-* Easy to read
+* Easy to read.
 * Very good at handling lifecycle events.
 
 ## Singleton
