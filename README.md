@@ -26,7 +26,7 @@ To use Retrofit we need:
 ### Model-View-ViewModel (MVVM)
 UI should only has UI logic. We need MVVM to handle the separation of concerns. Google created this architecture.
 Key components:
-* LiveData: to build data objects that notify views when the underlying database changes.
+* LiveData: to build data objects that notify views when the underlying database changes `MutableLiveData`.
 * ViewModel: stores UI-related data that isn't destroyed on app rotations.
 * Room: SQLite object mapping library. Easily convert SQLite table data to Java objects.
 
