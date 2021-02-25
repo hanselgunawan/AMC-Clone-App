@@ -25,6 +25,9 @@ import java.util.List;
 
 public class MovieListActivity extends AppCompatActivity {
 
+    // Network Security config
+
+
     Button btn;
 
     // ViewModel
@@ -36,7 +39,14 @@ public class MovieListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         btn = findViewById(R.id.button);
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
+        setupObserver();
 
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchMovieApi("Fast", 1);
+            }
+        });
 //        btn.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View v) {
@@ -50,9 +60,18 @@ public class MovieListActivity extends AppCompatActivity {
         movieListViewModel.getMovies().observe(this, new Observer<List<MovieModel>>() {
             @Override
             public void onChanged(List<MovieModel> movieModels) {
-
+                if (movieModels != null) {
+                    for (MovieModel movieModel: movieModels) {
+                        // Get the data in the log
+                        Log.v("Tag", "onChanged: " + movieModel.getTitle());
+                    }
+                }
             }
         });
+    }
+
+    private void searchMovieApi(String query, int pageNumber) {
+        movieListViewModel.searchMovieApi(query, pageNumber);
     }
 
     private void getRetrofitResponse() {

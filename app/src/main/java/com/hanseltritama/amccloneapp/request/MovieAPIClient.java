@@ -57,7 +57,7 @@ public class MovieAPIClient {
                 // Cancelling Retrofit Call
                 myHandler.cancel(true);
             }
-        }, 5000, TimeUnit.MICROSECONDS);
+        }, 5000, TimeUnit.MILLISECONDS);
     }
 
     private class RetrieveMoviesRunnable implements Runnable {
