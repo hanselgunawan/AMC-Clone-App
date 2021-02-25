@@ -29,6 +29,8 @@ Key components:
 * LiveData: to build data objects that notify views when the underlying database changes `MutableLiveData`.
 * ViewModel: stores UI-related data that isn't destroyed on app rotations.
 * Room: SQLite object mapping library. Easily convert SQLite table data to Java objects.
+### ScheduledExecutorServices
+Used to schedule commands to run after a given delay, or to execute periodically.
 
 **Why MVVM?**
 * UI components are kept away from the business logic.
