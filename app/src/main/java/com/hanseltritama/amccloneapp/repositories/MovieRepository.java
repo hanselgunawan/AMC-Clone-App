@@ -1,6 +1,7 @@
 package com.hanseltritama.amccloneapp.repositories;
 
 import com.hanseltritama.amccloneapp.model.MovieModel;
+import com.hanseltritama.amccloneapp.request.MovieAPIClient;
 
 import java.util.List;
 
@@ -12,8 +13,7 @@ public class MovieRepository {
     // Singleton for repository
     private static MovieRepository instance;
 
-    // LiveData
-    private MutableLiveData<List<MovieModel>> moviesLiveData;
+    private MovieAPIClient movieAPIClient;
 
     public static MovieRepository getInstance() {
         if (instance == null) {
@@ -23,11 +23,11 @@ public class MovieRepository {
     }
 
     private MovieRepository() {
-        moviesLiveData = new MutableLiveData<>();
+        movieAPIClient = MovieAPIClient.getInstance();
     }
 
     public LiveData<List<MovieModel>> getMovies() {
-        return moviesLiveData;
+        return movieAPIClient.getMovies();
     }
 
 }
