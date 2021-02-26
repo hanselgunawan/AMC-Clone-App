@@ -31,6 +31,15 @@ Key components:
 * Room: SQLite object mapping library. Easily convert SQLite table data to Java objects.
 ### ScheduledExecutorServices
 Used to schedule commands to run after a given delay, or to execute periodically.
+### Glide
+A fast and efficient open source media management and image loading framework for Android that wraps media decoding, memory and disk caching, and resource pooling into a simple and easy to use interface.
+#### Glide vs Picasso
+* Glide loads image according to the size of view **but** Picasso loads full size image.
+* Glide prevents `OutOfMemoryError` exception.
+* Glide supports `.gif` where Picasso does not.
+* Glide can load multiple image into the same view at the same time.
+* Glide caches images on the disk. So if it's already on the disk, it won't download anymore.
+* Picasso will cache only a single size of image (the full-size) where Glide cache each size of `ImageView`.
 
 **Why MVVM?**
 * UI components are kept away from the business logic.
@@ -52,4 +61,28 @@ The file `Service` is a Singleton.
 
 ## Parcelable
 To send data throughout the activities.
+
+## Files
+### OnMovieListener
+Used to store all the OnClicks on ViewHolder.
+### ViewHolder
+Used to assign on which layout element does it pointing to.
+```
+TextView title, category, duration;
+public MovieViewHolder(@NonNull View itemView, OnMovieListener onMovieListener) {
+    super(itemView);
+    title = itemView.findViewById(R.id.movie_title);
+    category = itemView.findViewById(R.id.movie_category);
+    duration = itemView.findViewById(R.id.movie_duration);
+}
+```
+### RecyclerView
+Assign value to the view on `onBindViewHolder`.
+```
+@Override
+public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    ((MovieViewHolder) holder).title.setText(movieModels.get(position).getTitle());
+}
+```
+
 
