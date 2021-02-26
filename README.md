@@ -41,13 +41,13 @@ A fast and efficient open source media management and image loading framework fo
 * Glide caches images on the disk. So if it's already on the disk, it won't download anymore.
 * Picasso will cache only a single size of image (the full-size) where Glide cache each size of `ImageView`.
 
-**Why MVVM?**
+## Why MVVM?
 * UI components are kept away from the business logic.
 * The business logic is kept away from the database operations.
 * Easy to read.
 * Very good at handling lifecycle events.
 
-**MVVM**
+## MVVM
 * **Model**: holds the data of the application. Expose the data to ViewModel through Observables.
 * **View**: It represents the UI. It observes the ViewModel.
 * **ViewModel**: A link between the Model and the View. Responsible to transfer the data from the Model. It provides data streams to the View. It uses callbacks to update the View.
