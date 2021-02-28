@@ -100,3 +100,46 @@ To show it as a grid, you can use `new GridLayoutManager(context, column_per_row
 ```
 recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 ```
+
+## Material Design
+### App Bar Behavior
+To collapse the toolbar when scrolled, we can easily implement that by adding
+```
+app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+```
+into the `<androidx.recyclerview.widget.RecyclerView>` tag on the layout file.
+### Set App Bar from Activity
+We can setup the toolbar on the activity by calling `setSupportActionBar` function.
+```
+// Toolbar
+Toolbar toolbar = findViewById(R.id.my_toolbar);
+setSupportActionBar(toolbar);
+```
+This method sets the toolbar as the app bar for the activity.
+To use the `ActionBar` utility methods, call the activity's `getSupportActionBar()` method. This method returns a reference to an appcompat `ActionBar` object. Once you have that reference, you can call any of the `ActionBar` methods to adjust the app bar. For example, to hide the app bar, call `ActionBar.hide()`.
+
+## Hex Opacity Values
+This is used to create an opacity to the color. For example: `#80FFFFFF` to give 50% opacity to black color `#FFFFFF`.
+```
+100% — FF
+95% — F2
+90% — E6
+85% — D9
+80% — CC
+75% — BF
+70% — B3
+65% — A6
+60% — 99
+55% — 8C
+50% — 80
+45% — 73
+40% — 66
+35% — 59
+30% — 4D
+25% — 40
+20% — 33
+15% — 26
+10% — 1A
+5% — 0D
+0% — 00
+```
