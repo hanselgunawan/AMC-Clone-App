@@ -33,7 +33,7 @@ public class MovieRecyclerView extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((MovieViewHolder) holder).title.setText(movieModels.get(position).getTitle());
         ((MovieViewHolder) holder).release_date.setText(movieModels.get(position).getRelease_date());
-        ((MovieViewHolder) holder).duration.setText(String.valueOf(movieModels.get(position).getRuntime()));
+        ((MovieViewHolder) holder).duration.setText(movieModels.get(position).getOriginal_language());
 
         // vote average is over 10, and our rating bar is only 5 stars: dividing by 2 in order to get the correct result
         ((MovieViewHolder) holder).ratingBar.setRating(movieModels.get(position).getVote_average()/2);

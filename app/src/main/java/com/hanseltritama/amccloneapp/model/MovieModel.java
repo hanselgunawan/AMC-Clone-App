@@ -11,17 +11,17 @@ public class MovieModel implements Parcelable {
     private String movie_overview;
     private int movie_id;
     private float vote_average;
-    private int runtime;
+    private String original_language;
 
     // Constructor
-    public MovieModel(String title, String poster_path, String release_date, String movie_overview, int movie_id, float vote_average, int runtime) {
+    public MovieModel(String title, String poster_path, String release_date, String movie_overview, int movie_id, float vote_average, String original_language) {
         this.title = title;
         this.poster_path = poster_path;
         this.release_date = release_date;
         this.movie_overview = movie_overview;
         this.movie_id = movie_id;
         this.vote_average = vote_average;
-        this.runtime = runtime;
+        this.original_language = original_language;
     }
 
     protected MovieModel(Parcel in) {
@@ -31,7 +31,7 @@ public class MovieModel implements Parcelable {
         movie_overview = in.readString();
         movie_id = in.readInt();
         vote_average = in.readFloat();
-        runtime = in.readInt();
+        original_language = in.readString();
     }
 
     public static final Creator<MovieModel> CREATOR = new Creator<MovieModel>() {
@@ -71,8 +71,8 @@ public class MovieModel implements Parcelable {
         return vote_average;
     }
 
-    public int getRuntime() {
-        return runtime;
+    public String getOriginal_language() {
+        return original_language;
     }
 
     @Override
@@ -88,5 +88,19 @@ public class MovieModel implements Parcelable {
         dest.writeString(movie_overview);
         dest.writeInt(movie_id);
         dest.writeFloat(vote_average);
+        dest.writeString(original_language);
+    }
+
+    @Override
+    public String toString() {
+        return "MovieModel{" +
+                "title='" + title + '\'' +
+                ", poster_path='" + poster_path + '\'' +
+                ", release_date='" + release_date + '\'' +
+                ", movie_overview='" + movie_overview + '\'' +
+                ", movie_id=" + movie_id +
+                ", vote_average=" + vote_average +
+                ", original_language='" + original_language + '\'' +
+                '}';
     }
 }
