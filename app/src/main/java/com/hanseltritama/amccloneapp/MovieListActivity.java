@@ -1,6 +1,7 @@
 package com.hanseltritama.amccloneapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.hanseltritama.amccloneapp.adapters.MovieRecyclerView;
 import com.hanseltritama.amccloneapp.adapters.OnMovieListener;
@@ -40,6 +42,9 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
         recyclerView = findViewById(R.id.my_recycler_view);
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
         ConfigureRecyclerView();
@@ -89,7 +94,7 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     @Override
     public void onMovieClick(int position) {
-
+        Toast.makeText(this, "The Position " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
