@@ -1,6 +1,7 @@
 package com.hanseltritama.amccloneapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,9 +13,6 @@ import retrofit2.Response;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.hanseltritama.amccloneapp.adapters.MovieRecyclerView;
 import com.hanseltritama.amccloneapp.adapters.OnMovieListener;
@@ -25,7 +23,6 @@ import com.hanseltritama.amccloneapp.utils.Credentials;
 import com.hanseltritama.amccloneapp.utils.MovieAPI;
 import com.hanseltritama.amccloneapp.viewmodel.MovieListViewModel;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,11 +42,14 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         // Toolbar
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+
+        // Search View
+        SetupSearchView();
+
         recyclerView = findViewById(R.id.my_recycler_view);
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
         ConfigureRecyclerView();
         setupObserver();
-        searchMovieApi("Fast", 1);
 
 //        btn.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -81,10 +81,6 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         });
     }
 
-    private void searchMovieApi(String query, int pageNumber) {
-        movieListViewModel.searchMovieApi(query, pageNumber);
-    }
-
     // Initializing recyclerView & adding data to it
     private void ConfigureRecyclerView() {
         movieRecyclerViewAdapter = new MovieRecyclerView(this);
@@ -94,12 +90,29 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     @Override
     public void onMovieClick(int position) {
-        Toast.makeText(this, "The Position " + position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "The Position " + position, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onCategoryClick(String category) {
 
+    }
+
+    // Get data from searchview & query the API to get the results
+    private void SetupSearchView() {
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                movieListViewModel.searchMovieApi(query, 1);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     private void getRetrofitResponse() {
