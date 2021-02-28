@@ -1,5 +1,6 @@
 package com.hanseltritama.amccloneapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -86,6 +87,19 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         movieRecyclerViewAdapter = new MovieRecyclerView(this);
         recyclerView.setAdapter(movieRecyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // RecyclerView Pagination
+        // Loading next page of API response
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                // Check if recyclerView can still scroll vertically or not (hit the last item)
+                if (!recyclerView.canScrollVertically(1)) {
+                    // Display the next result
+                    movieListViewModel.searchNextPage();
+                }
+            }
+        });
     }
 
     @Override
