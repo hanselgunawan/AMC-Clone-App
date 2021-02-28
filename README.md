@@ -77,6 +77,7 @@ public MovieViewHolder(@NonNull View itemView, OnMovieListener onMovieListener) 
 }
 ```
 ### RecyclerView
+The `RecyclerView` file is used as the adapter for the Activity's `recyclerView.adapter`.
 Assign value to the view on `onBindViewHolder`.
 ```
 @Override
@@ -84,5 +85,18 @@ public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int positi
     ((MovieViewHolder) holder).title.setText(movieModels.get(position).getTitle());
 }
 ```
-
-
+### MovieListActivity
+This file is used to display the `RecyclerView` to the user.
+Set the adapter by using:
+```
+recyclerView.setAdapter(movieRecyclerViewAdapter);
+```
+And then set how we want to show our `RecyclerView` to be displayed by using `setLayoutManager`.
+To show it as a list, you can use `new LinearLayoutManager(context)`.
+```
+recyclerView.setLayoutManager(new LinearLayoutManager(this));
+```
+To show it as a grid, you can use `new GridLayoutManager(context, column_per_row)`.
+```
+recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+```
