@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,6 +16,8 @@ import retrofit2.Response;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.hanseltritama.amccloneapp.adapters.MovieRecyclerView;
 import com.hanseltritama.amccloneapp.adapters.OnMovieListener;
@@ -29,6 +33,10 @@ import java.util.List;
 
 public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
 
+    // Progress Bar
+    ProgressBar progressBar;
+    ConstraintLayout constraintLayout;
+
     //RecyclerView
     private RecyclerView recyclerView;
     private MovieRecyclerView movieRecyclerViewAdapter;
@@ -40,6 +48,10 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Constraint Layout
+        constraintLayout = findViewById(R.id.constraint_layout);
+
         // Toolbar
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
@@ -47,8 +59,13 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         // Search View
         SetupSearchView();
 
+        // Progress Bar
+        progressBar = findViewById(R.id.my_progress_bar);
+        progressBar.setVisibility(View.GONE);
+
         recyclerView = findViewById(R.id.my_recycler_view);
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
+
         ConfigureRecyclerView();
         setupObserver();
 
@@ -76,6 +93,11 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
                         // Get the data in the log
                         Log.v("Tag", "onChanged: " + movieModel.getTitle());
                         movieRecyclerViewAdapter.setMovieModels(movieModels);
+                        progressBar.setVisibility(View.GONE);
+                        constraintLayout.setBackgroundColor(ContextCompat.getColor(
+                                MovieListActivity.this,
+                                R.color.transparent)
+                        );
                     }
                 }
             }
@@ -97,6 +119,11 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
                 if (!recyclerView.canScrollVertically(1)) {
                     // Display the next result
                     movieListViewModel.searchNextPage();
+                    progressBar.setVisibility(View.VISIBLE);
+                    constraintLayout.setBackgroundColor(ContextCompat.getColor(
+                            MovieListActivity.this,
+                            R.color.black_50_percent_opactiy)
+                    );
                 }
             }
         });
