@@ -3,19 +3,26 @@ package com.hanseltritama.amccloneapp.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MovieModel implements Parcelable {
 
     private String title;
     private String poster_path;
+    private String backdrop_path;
     private String release_date;
+
+    @SerializedName("overview")
     private String movie_overview;
+
     private int movie_id;
     private float vote_average;
     private String original_language;
 
     // Constructor
-    public MovieModel(String title, String poster_path, String release_date, String movie_overview, int movie_id, float vote_average, String original_language) {
+    public MovieModel(String title, String backdrop_path, String poster_path, String release_date, String movie_overview, int movie_id, float vote_average, String original_language) {
         this.title = title;
+        this.backdrop_path = backdrop_path;
         this.poster_path = poster_path;
         this.release_date = release_date;
         this.movie_overview = movie_overview;
@@ -27,6 +34,7 @@ public class MovieModel implements Parcelable {
     protected MovieModel(Parcel in) {
         title = in.readString();
         poster_path = in.readString();
+        backdrop_path = in.readString();
         release_date = in.readString();
         movie_overview = in.readString();
         movie_id = in.readInt();
@@ -53,6 +61,10 @@ public class MovieModel implements Parcelable {
 
     public String getPoster_path() {
         return poster_path;
+    }
+
+    public String getBackdrop_path() {
+        return backdrop_path;
     }
 
     public String getRelease_date() {
@@ -84,6 +96,7 @@ public class MovieModel implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(poster_path);
+        dest.writeString(backdrop_path);
         dest.writeString(release_date);
         dest.writeString(movie_overview);
         dest.writeInt(movie_id);
@@ -96,6 +109,7 @@ public class MovieModel implements Parcelable {
         return "MovieModel{" +
                 "title='" + title + '\'' +
                 ", poster_path='" + poster_path + '\'' +
+                ", backdrop_path='" + backdrop_path + '\'' +
                 ", release_date='" + release_date + '\'' +
                 ", movie_overview='" + movie_overview + '\'' +
                 ", movie_id=" + movie_id +
