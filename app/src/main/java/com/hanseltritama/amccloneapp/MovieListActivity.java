@@ -34,6 +34,9 @@ import java.util.List;
 
 public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
 
+    // Search View
+    SearchView searchView;
+
     // Progress Bar
     ProgressBar progressBar;
     ConstraintLayout constraintLayout;
@@ -49,6 +52,9 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Search View
+        searchView = findViewById(R.id.search_view);
 
         // Constraint Layout
         constraintLayout = findViewById(R.id.constraint_layout);
@@ -82,6 +88,12 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 //                getRetrofitResponseById();
 //            }
 //        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchView.clearFocus();
     }
 
     // Observing any data change
@@ -144,7 +156,6 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 
     // Get data from searchview & query the API to get the results
     private void SetupSearchView() {
-        final SearchView searchView = findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
