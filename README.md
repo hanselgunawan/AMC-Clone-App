@@ -100,6 +100,8 @@ To show it as a grid, you can use `new GridLayoutManager(context, column_per_row
 ```
 recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 ```
+### MovieDetailsActivity
+This file is used to display the selected movie's overview.
 
 ## Material Design
 ### App Bar Behavior
@@ -143,3 +145,6 @@ This is used to create an opacity to the color. For example: `#80FFFFFF` to give
 5% — 0D
 0% — 00
 ```
+
+## App Demo
+<img src="https://i.gyazo.com/fe7617a5ed4ecc930a74ee3dc6e09839.gif" height="650px" width="350px" />
