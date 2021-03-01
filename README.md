@@ -1,5 +1,8 @@
 # AMC-Clone-App
 
+## App Demo
+<img src="https://i.gyazo.com/fe7617a5ed4ecc930a74ee3dc6e09839.gif" height="650px" width="350px" />
+
 ## Dependencies
 ```
 // Retrofit
@@ -145,6 +148,3 @@ This is used to create an opacity to the color. For example: `#80FFFFFF` to give
 5% — 0D
 0% — 00
 ```
-
-## App Demo
-<img src="https://i.gyazo.com/fe7617a5ed4ecc930a74ee3dc6e09839.gif" height="650px" width="350px" />
