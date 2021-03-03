@@ -4,7 +4,7 @@
 <img src="https://i.gyazo.com/fe7617a5ed4ecc930a74ee3dc6e09839.gif" height="650px" width="350px" />
 
 ## API Source
-[TMDB](https://developers.themoviedb.org/)
+[TMDB](https://www.themoviedb.org/documentation/api)
 
 ## Dependencies
 ```
