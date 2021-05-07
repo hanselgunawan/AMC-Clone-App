@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AMC Clone App</string>
+    <string name="speech_to_text">Speech To Text</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.hanseltritama.amccloneapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -14,11 +15,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.hanseltritama.amccloneapp.adapters.MovieRecyclerView;
 import com.hanseltritama.amccloneapp.adapters.OnMovieListener;
@@ -31,8 +39,12 @@ import com.hanseltritama.amccloneapp.viewmodel.MovieListViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MovieListActivity extends AppCompatActivity implements OnMovieListener {
+
+    // Speech to Text Button
+    Button speechToText;
 
     // Search View
     SearchView searchView;
@@ -52,6 +64,9 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Button Speech to Text
+        speechToText = findViewById(R.id.speech_to_text_button);
 
         // Search View
         searchView = findViewById(R.id.search_view);
@@ -73,7 +88,21 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
         recyclerView = findViewById(R.id.my_recycler_view);
         movieListViewModel = new ViewModelProvider(this).get(MovieListViewModel.class);
 
+        // Voice Search
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(true);
+
         ConfigureRecyclerView();
+
+        // Speech to Text
+        speechToText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                askSpeechInput();
+            }
+        });
+
         setupObserver();
 
 //        btn.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +117,28 @@ public class MovieListActivity extends AppCompatActivity implements OnMovieListe
 //                getRetrofitResponseById();
 //            }
 //        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 102 && resultCode == Activity.RESULT_OK) {
+            ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            searchView.setQuery(result.get(0), true);
+        }
+    }
+
+    private void askSpeechInput() {
+        if (!SpeechRecognizer.isRecognitionAvailable(this)) {
+            Toast.makeText(this, "Speech recognition is not available", Toast.LENGTH_SHORT).show();
+        } else {
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Say something!");
+            startActivityForResult(intent, 102);
+        }
     }
 
     @Override
